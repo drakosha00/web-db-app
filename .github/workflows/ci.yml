@@ -20,11 +20,11 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build & Push Web Image
-      run: |
-        docker build -t ghcr.io/${{ github.repository_owner }}/web-app:latest ./app
-        docker push ghcr.io/${{ github.repository_owner }}/web-app:latest
+    - name: Build the Docker image
+      run: docker build -t ghcr.io/drakosha00/web-db-app:latest ./app
+
+    - name: Push the Docker image
+      run: docker push ghcr.io/drakosha00/web-db-app:latest
 
     - name: Build & Push DB Image (optional)
-      run: |
-        echo "Using standard PostgreSQL image, no build needed."
+      run: echo "Using standard PostgreSQL image, no build needed."
