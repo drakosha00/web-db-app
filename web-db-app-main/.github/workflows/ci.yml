@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build and Push Docker Images try
 
 on:
   push:
@@ -9,18 +9,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: drakosha00
+          password: ${{ secrets.CR_PAT }}
 
-    - name: Build the Docker image
-      run: docker build -t ghcr.io/${{ github.repository_owner }}/web-db-app:latest ./app
+      - name: Build the Docker image
+        run: docker build -t ghcr.io/drakosha00/web-db-app:latest ./app
 
-    - name: Push the Docker image
-      run: docker push ghcr.io/${{ github.repository_owner }}/web-db-app:latest
+      - name: Push the Docker image
+        run: docker push ghcr.io/drakosha00/web-db-app:latest
+
+      - name: Build & Push DB Image (optional)
+        run: echo "Using standard PostgreSQL image, no build needed."
