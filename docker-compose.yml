@@ -14,7 +14,7 @@ services:
       - DB_PASSWORD=postgres
 
   db:
-    image: postgres:13
+    image: ghcr.io/drakosha00/web-db-db:latest  
     environment:
       POSTGRES_DB: testdb
       POSTGRES_USER: postgres

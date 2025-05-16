@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Code
@@ -20,11 +23,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Build the Docker image
+      # 🔧 Сборка web
+      - name: Build the Web Docker image
         run: docker build -t ghcr.io/drakosha00/web-db-app:latest ./app
 
-      - name: Push the Docker image
+      - name: Push the Web Docker image
         run: docker push ghcr.io/drakosha00/web-db-app:latest
 
-      - name: Build & Push DB Image (optional)
-        run: echo "Using standard PostgreSQL image, no build needed."
+      # 🔧 Сборка DB
+      - name: Build the DB Docker image
+        run: docker build -t ghcr.io/drakosha00/web-db-db:latest ./db
+
+      - name: Push the DB Docker image
+        run: docker push ghcr.io/drakosha00/web-db-db:latest
