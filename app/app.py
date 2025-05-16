@@ -13,6 +13,10 @@ def get_db_connection():
     )
     return conn
 
+@app.route('/')
+def index():
+    return 'API работает. Используйте /add для POST и /entries для GET.'
+
 @app.route('/add', methods=['POST'])
 def add_entry():
     data = request.json
@@ -36,3 +40,4 @@ def get_entries():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+
